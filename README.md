@@ -46,11 +46,16 @@ For starters let's establish the following:
 | [laravel]                     | [![laravel-status]][laravel-package]                                       | https://laravel.com/docs                           |
 | [laravel-ui]                  | [![laravel-ui-status]][laravel-ui-package]                                 | https://laravel.com/docs/6.x/frontend              |
 | [vue]                         | [![vue-status]][vue-package]                                               | https://vuejs.org/                                 |
-| [vue-router]                  | [![vue-router-status]][vue-router-package]                                 | http://router.vuejs.org/                           |
-| [vuex]                        | [![vuex-status]][vuex-package]                                                    | https://vuex.vuejs.org                             |
-| [vuex-router-sync]            | [![vuex-router-sync-status]][vuex-router-sync-package]                     | [vuex-router-sync]                                 |
+| [vuex]                        | [![vuex-status]][vuex-package]                                             | https://vuex.vuejs.org                             |
 | [laravel-vue-i18n-generator]  | [![laravel-vue-i18n-generator-status]][laravel-vue-i18n-generator-package] | [laravel-vue-i18n-generator]                       |
 
+
+### Might get back to using:
+
+| Project                       | Status                                                                     | Documentation                                      |
+| ----------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------- |
+| [vue-router]                  | [![vue-router-status]][vue-router-package]                                 | http://router.vuejs.org/                           |
+| [vuex-router-sync]            | [![vuex-router-sync-status]][vuex-router-sync-package]                     | [vuex-router-sync]                                 |
 
 
 [laravel]: https://github.com/laravel/laravel
@@ -216,15 +221,15 @@ To test things out let's create our first custom model:
 
 > Note: adding `-mrc` flag will create, besides the model, a migration and a resourceful controller.
 
-
+<!-- 
 **Next step** is to install the `laravel/ui` first party package, and choose the preset to start building on. For this we will run, in terminal:
 
 ```
 composer require laravel/ui
 php artisan ui vue --auth
 npm install && npm run dev
-```
-
+``` -->
+<!-- 
 Remove everything from `routes/web.php` and replace with the following:
 
 ```php
@@ -234,35 +239,9 @@ Auth::routes();
 
 Route::get('/{any}', 'HomeController@index')->where('any', '.*');
 
-```
+``` -->
 
-This will register the default auth routes and will basically leave everything else to be handled by our vue-router later on.
-
-Update: 
-```php
-protected $redirectTo = '/home';
-```
-to 
-```php
-protected $redirectTo = '/';
-```
-in:
-- `app/Http/Controllers/Auth/ConfirmPasswordController.php`
-- `app/Http/Controllers/Auth/LoginController.php`
-- `app/Http/Controllers/Auth/RegisterController.php`
-- `app/Http/Controllers/Auth/ResetPasswordController.php`
-- `app/Http/Controllers/Auth/VerificationController.php`
-
-and
-
-```php
-return redirect('/home');
-```
-to
-```php
-return redirect('/');
-```
-in `app/Http/Middleware/RedirectIfAuthenticated.php`
+<!-- This will register the default auth routes and will basically leave everything else to be handled by our vue-router later on. -->
 
 
 **Next step**, because on a fresh installation we will update and rollback the database structure quite often, we need to create a user record to work with:
@@ -309,16 +288,6 @@ $this->call(UsersTableSeeder::class);
 > Note: **Always remember to change these user / credentials in production.**
 
 
-**Next step** is to configure the `phpunit` to run the tests in a sqlite - in memory database:
-
-Add the following two lines in `phpunit.xml`:
-
-```xml
-    <server name="DB_CONNECTION" value="sqlite"/>
-    <server name="DB_DATABASE" value=":memory:"/>
-```
-
-
 **Next step** is to 
     - delete `resources\views\welcome.blade.php`,
     - duplicate `resources\views\layouts\app.blade.php` into `resources\views\layouts\guest.blade.php`
@@ -345,13 +314,13 @@ in:
 
 
 
-**Next step** is to pull in the following package through npm:
+**Next step** is to pull in the following packages through npm:
 
 ```
-npm i vue-router --save-dev
 npm i vuex --save-dev
-npm i vuex-router-sync --save-dev
 npm i vue-i18n --save-dev
+# npm i vue-router --save-dev
+# npm i vuex-router-sync --save-dev
 ```
 
 Before starting structuring our javascript files and components we will configure an alias for webpack which will allow us to use `@` instead of multiple `../` in order to properly set the path of some components. We can do that by adding the following to `webpack.mix.js`:
@@ -368,7 +337,7 @@ mix.webpackConfig({
 ```
 
 Let's now set up a basic file structure for the frontend:
-
+<!-- 
 - In `resources\js`: 
     - Remove the file `resources/js/components/ExampleComponent.vue`, which comes with the `laravel/ui` we installed earlier.
     - Create folder `layouts`
@@ -416,7 +385,7 @@ Let's now set up a basic file structure for the frontend:
         - Create `resources/js/pages/Profile.vue`
         - Create `resources/js/pages/errors/Error404.vue`
         
-    - Create folder `plugins`
+    - Create folder `plugins` -->
 
 In order to consume our laravel lang files also in the frontend and keep a single source of truth for all translations used in the App we will use the following package:
 
